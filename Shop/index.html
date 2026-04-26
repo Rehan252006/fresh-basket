@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fresh Basket – Anantapur</title>
+
+  <!-- SEO & Social Sharing Meta Tags -->
+  <meta name="description"
+    content="Order fresh vegetables, fruits, and groceries delivered straight to your door in Anantapur." />
+  <meta property="og:title" content="Fresh Basket – Anantapur" />
+  <meta property="og:description"
+    content="Order fresh vegetables, fruits, and groceries delivered straight to your door in Anantapur." />
+  <meta property="og:image" content="https://placehold.co/1200x630/2E7D32/FFFFFF?text=🛒+Fresh+Basket+Anantapur" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourfreshbasket.com" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap"
+    rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="animations.css" />
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- ── WELCOME OVERLAY (SITE STYLE) ─────────────────── -->
+  <div id="welcome-overlay" class="site-welcome-overlay" style="display: none;">
+    <h2 class="site-welcome-text">WELCOME</h2>
+  </div>
+
+  <!-- ── NAVBAR ───────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="nav-inner">
+
+      <!-- Logo -->
+      <a href="index.html" class="nav-logo">
+        🛒 Fresh Basket
+      </a>
+
+      <!-- Hamburger (mobile) -->
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- Nav links -->
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="cart.html" class="nav-link">Cart</a></li>
+        <li><a href="orders.html" class="nav-link">My Orders</a></li>
+        <li id="nav-auth"><a href="login.html" class="nav-link">Login</a></li>
+      </ul>
+
+      <!-- Cart icon -->
+      <a href="cart.html" class="cart-btn" id="cart-icon">
+        🛍️
+        <span class="cart-count" id="cart-count" style="display:none">0</span>
+      </a>
+
+    </div>
+  </nav>
+
+  <!-- ── HERO SECTION ─────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-content fade-up">
+      <h1 class="hero-title">Fresh Groceries<br />Delivered in <span class="highlight">Anantapur</span></h1>
+      <p class="hero-subtitle">Order fresh vegetables, fruits, dairy and more — delivered right to your door within
+        Anantapur district.</p>
+      <a href="#products" class="btn-primary">Shop Now</a>
+    </div>
+    <div class="hero-image fade-up" style="animation-delay:0.2s">
+      <div class="hero-illustration">🥦🍅🥕🧅🍌🥛</div>
+    </div>
+  </section>
+
+  <!-- ── CATEGORY FILTERS ──────────────────────────────── -->
+  <section class="filters-section" id="products">
+    <div class="container">
+
+      <!-- Search bar -->
+      <div class="search-wrap">
+        <input type="text" id="search-input" class="search-input" placeholder="Search for vegetables, fruits, dairy..."
+          oninput="searchProducts(this.value)" />
+        <span class="search-icon">🔍</span>
+      </div>
+
+      <!-- Category filter buttons -->
+      <div class="filter-btns">
+        <button class="filter-btn active" onclick="filterByCategory('all')">All</button>
+        <button class="filter-btn" onclick="filterByCategory('Vegetables')">🥦 Vegetables</button>
+        <button class="filter-btn" onclick="filterByCategory('Dairy')">🥛 Dairy</button>
+        <button class="filter-btn" onclick="filterByCategory('Snacks')">🍿 Snacks</button>
+        <button class="filter-btn" onclick="filterByCategory('Beverages')">🧃 Beverages</button>
+        <button class="filter-btn" onclick="filterByCategory('Grocery')">📦 Grocery</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── PRODUCT GRID ──────────────────────────────────── -->
+  <section class="products-section">
+    <div class="container">
+      <div class="product-grid" id="product-grid">
+        <!-- Products loaded by products.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <p class="footer-logo">🛒 Fresh Basket</p>
+          <p class="footer-tagline">Fresh groceries, delivered with love in Anantapur.</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="cart.html">Cart</a>
+          <a href="login.html">Login</a>
+        </div>
+      </div>
+      <p class="footer-copy">&copy; 2024 Fresh Basket – Anantapur. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ── TOAST NOTIFICATION ────────────────────────────── -->
+  <div id="toast" class="toast" style="display:none"></div>
+
+  <!-- ── SCRIPTS ───────────────────────────────────────── -->
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
+  <script src="cart.js"></script>
+  <script src="products.js"></script>
+  <script>
+    // Init page
+    document.addEventListener("DOMContentLoaded", () => {
+      setupNavbar();
+      loadProducts();
+      checkWelcomeAnimation();
+    });
+
+    // Check URL for login success and trigger animation
+    function checkWelcomeAnimation() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('login') === 'success') {
+        const overlay = document.getElementById('welcome-overlay');
+
+        // Show the overlay
+        overlay.style.display = 'flex';
+
+        // Clean the URL so it doesn't trigger again on refresh
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+
+        // Hide the overlay after 3 seconds (matches CSS animation)
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 3000);
+      }
+    }
+
+    // Mobile menu toggle
+    function toggleMenu() {
+      const links = document.getElementById("nav-links");
+      const burger = document.getElementById("hamburger");
+      links.classList.toggle("open");
+      burger.classList.toggle("open");
+    }
+
+    // Close menu when a link is clicked
+    document.querySelectorAll(".nav-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        document.getElementById("nav-links").classList.remove("open");
+        document.getElementById("hamburger").classList.remove("open");
+      });
+    });
+  </script>
+
+</body>
+
+</html>
