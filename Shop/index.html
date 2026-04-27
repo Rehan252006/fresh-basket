@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMV Daily Needs – Anantapur</title>
+
+  <!-- SEO & Social Sharing Meta Tags -->
+  <meta name="description"
+    content="Order your daily needs, fresh vegetables, and groceries delivered straight to your door in Anantapur." />
+  <meta property="og:title" content="SMV Daily Needs – Anantapur" />
+  <meta property="og:description"
+    content="Order your daily needs, fresh vegetables, and groceries delivered straight to your door in Anantapur." />
+  <meta property="og:image" content="https://placehold.co/1200x630/2E7D32/FFFFFF?text=🛒+SMV+Daily+Needs+Anantapur" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourfreshbasket.com" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap"
+    rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="animations.css" />
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- ── WELCOME OVERLAY (SITE STYLE) ─────────────────── -->
+  <div id="welcome-overlay" class="site-welcome-overlay" style="display: none;">
+    <h2 class="site-welcome-text">WELCOME</h2>
+  </div>
+
+  <!-- ── NAVBAR ───────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="nav-inner">
+
+      <!-- Logo -->
+      <a href="index.html" class="nav-logo">
+        🛒 SMV Daily Needs
+      </a>
+
+      <!-- Hamburger (mobile) -->
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- Nav links -->
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="cart.html" class="nav-link">Cart</a></li>
+        <li><a href="orders.html" class="nav-link">My Orders</a></li>
+        <li id="nav-auth"><a href="login.html" class="nav-link">Login</a></li>
+      </ul>
+
+      <!-- Cart icon -->
+      <a href="cart.html" class="cart-btn" id="cart-icon">
+        🛍️
+        <span class="cart-count" id="cart-count" style="display:none">0</span>
+      </a>
+
+    </div>
+  </nav>
+
+  <!-- ── HERO SECTION ─────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-content fade-up">
+      <h1 class="hero-title">Fresh Groceries<br />Delivered in <span class="highlight">Anantapur</span></h1>
+      <p class="hero-subtitle">Order fresh vegetables, fruits, dairy and more — delivered right to your door within
+        Anantapur district.</p>
+      <a href="#products" class="btn-primary">Shop Now</a>
+    </div>
+    <div class="hero-image fade-up" style="animation-delay:0.2s">
+      <div class="hero-illustration">🥦🍅🥕🧅🍌🥛</div>
+    </div>
+  </section>
+
+  <!-- ── CATEGORY FILTERS ──────────────────────────────── -->
+  <section class="filters-section" id="products">
+    <div class="container">
+
+      <!-- Search bar -->
+      <div class="search-wrap">
+        <input type="text" id="search-input" class="search-input" placeholder="Search for vegetables, fruits, dairy..."
+          oninput="searchProducts(this.value)" />
+        <span class="search-icon">🔍</span>
+      </div>
+
+      <!-- Category filter buttons -->
+      <div class="filter-btns">
+        <button class="filter-btn active" onclick="filterByCategory('all')">All</button>
+        <button class="filter-btn" onclick="filterByCategory('Vegetables')">🥦 Vegetables</button>
+        <button class="filter-btn" onclick="filterByCategory('Dairy')">🥛 Dairy</button>
+        <button class="filter-btn" onclick="filterByCategory('Snacks')">🍿 Snacks</button>
+        <button class="filter-btn" onclick="filterByCategory('Beverages')">🧃 Beverages</button>
+        <button class="filter-btn" onclick="filterByCategory('Grocery')">📦 Grocery</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── PRODUCT GRID ──────────────────────────────────── -->
+  <section class="products-section">
+    <div class="container">
+      <div class="product-grid" id="product-grid">
+        <!-- Products loaded by products.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <p class="footer-logo">🛒 SMV Daily Needs</p>
+          <p class="footer-tagline">Your daily essentials, delivered with love in Anantapur.</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="cart.html">Cart</a>
+          <a href="login.html">Login</a>
+        </div>
+      </div>
+      <p class="footer-copy">&copy; 2026 SMV Daily Needs – Anantapur. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ── TOAST NOTIFICATION ────────────────────────────── -->
+  <div id="toast" class="toast" style="display:none"></div>
+
+  <!-- ── SCRIPTS ───────────────────────────────────────── -->
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
+  <script src="cart.js"></script>
+  <script src="products.js"></script>
+  <script>
+    // Init page
+    document.addEventListener("DOMContentLoaded", () => {
+      setupNavbar();
+      loadProducts();
+      checkWelcomeAnimation();
+    });
+
+    // Check URL for login success and trigger animation
+    function checkWelcomeAnimation() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('login') === 'success') {
+        const overlay = document.getElementById('welcome-overlay');
+
+        // Show the overlay
+        overlay.style.display = 'flex';
+
+        // Clean the URL so it doesn't trigger again on refresh
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+
+        // Hide the overlay after 3 seconds (matches CSS animation)
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 3000);
+      }
+    }
+
+    // Mobile menu toggle
+    function toggleMenu() {
+      const links = document.getElementById("nav-links");
+      const burger = document.getElementById("hamburger");
+      links.classList.toggle("open");
+      burger.classList.toggle("open");
+    }
+
+    // Close menu when a link is clicked
+    document.querySelectorAll(".nav-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        document.getElementById("nav-links").classList.remove("open");
+        document.getElementById("hamburger").classList.remove("open");
+      });
+    });
+  </script>
+  <!-- ── FLOATING WHATSAPP SUPPORT BUTTON ────────────── -->
+  <a
+    id="whatsapp-float"
+    href="https://wa.me/919030304695?text=Hi%2C%20I%20need%20help%20with%20my%20order%20on%20SMV%20Daily%20Needs%20Anantapur."
+    target="_blank"
+    rel="noopener noreferrer"
+    class="whatsapp-float"
+    title="Chat with us on WhatsApp"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="white" width="28" height="28">
+      <path d="M16 0C7.163 0 0 7.163 0 16c0 2.833.737 5.49 2.027 7.8L0 32l8.418-2.004A15.93 15.93 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.333a13.27 13.27 0 01-6.784-1.856l-.486-.29-5.003 1.192 1.258-4.878-.317-.5A13.24 13.24 0 012.667 16C2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.27-9.874c-.398-.2-2.353-1.16-2.718-1.292-.365-.133-.63-.2-.896.2-.265.398-1.028 1.292-1.26 1.558-.232.265-.465.3-.863.1-.398-.2-1.68-.619-3.2-1.974-1.183-1.055-1.981-2.357-2.213-2.755-.232-.398-.025-.613.175-.81.18-.178.398-.465.597-.698.2-.232.265-.398.398-.664.133-.265.066-.498-.033-.698-.1-.2-.896-2.16-1.228-2.957-.323-.777-.65-.672-.896-.684-.232-.012-.498-.015-.764-.015-.265 0-.697.1-.1063.498-.365.398-1.394 1.36-1.394 3.317s1.427 3.846 1.626 4.112c.2.265 2.808 4.287 6.803 6.014.951.41 1.693.655 2.272.838.955.303 1.824.26 2.511.158.766-.114 2.353-.962 2.685-1.89.332-.928.332-1.724.232-1.89-.1-.165-.365-.265-.763-.465z"/>
+    </svg>
+    <span class="whatsapp-label">Need Help?</span>
+  </a>
+
+</body>
+
+</html>
