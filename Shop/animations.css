@@ -1,0 +1,313 @@
+/* ============================================================
+   ANIMATIONS.CSS — SMV Daily Needs Anantapur (2026 Improved Version)
+   Premium, smooth & performant animations
+   ============================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ── Page Load ── */
+  body {
+    animation: pageFadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  }
+
+  @keyframes pageFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── Fade Up (Main hero, cards, sections) ── */
+  .fade-up {
+    opacity: 0;
+    animation: fadeUp 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Staggered fade-up for lists (add this class with delay) */
+  .fade-up-delay-1 { animation-delay: 100ms; }
+  .fade-up-delay-2 { animation-delay: 200ms; }
+  .fade-up-delay-3 { animation-delay: 300ms; }
+
+  /* ── Cart Icon Bounce (when item is added) ── */
+  .bounce {
+    animation: cartBounce 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes cartBounce {
+    0%   { transform: scale(1) rotate(0deg); }
+    25%  { transform: scale(1.4) rotate(-12deg); }
+    45%  { transform: scale(0.85) rotate(8deg); }
+    65%  { transform: scale(1.25) rotate(-5deg); }
+    80%  { transform: scale(0.95) rotate(3deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
+  /* ── Toast Notification ── */
+  .slide-in {
+    animation: toastSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes toastSlideIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 30px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
+    }
+  }
+
+  .fade-out {
+    animation: toastFadeOut 0.35s ease forwards;
+  }
+
+  @keyframes toastFadeOut {
+    to {
+      opacity: 0;
+      transform: translate(-50%, 15px) scale(0.95);
+    }
+  }
+
+  /* ── Admin New Order Banner ── */
+  .slide-down {
+    animation: bannerSlideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes bannerSlideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-70px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ── Navbar Link Hover (Underline slide) ── */
+  .nav-link {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #2e7d32;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* ── Buttons ── */
+  .btn-primary,
+  .btn-add-cart,
+  .btn-secondary {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-primary:hover,
+  .btn-add-cart:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(46, 125, 50, 0.35);
+  }
+
+  .btn-primary:active,
+  .btn-add-cart:active {
+    transform: scale(0.96);
+  }
+
+  /* ── Product Card Hover (Premium feel) ── */
+  .product-card {
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.13);
+  }
+
+  .product-card .product-image {
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .product-card:hover .product-image {
+    transform: scale(1.08);
+  }
+
+  /* ── Filter Button ── */
+  .filter-btn {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .filter-btn:active {
+    transform: scale(0.92);
+  }
+
+  /* ── Form Inputs ── */
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.15);
+  }
+
+  /* ── Auth Card Entrance ── */
+  .auth-card {
+    animation: authCardIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes authCardIn {
+    from {
+      opacity: 0;
+      transform: translateY(35px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* ── Success Checkmark ── */
+  .success-icon {
+    animation: successPop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes successPop {
+    0%   { transform: scale(0); opacity: 0; }
+    50%  { transform: scale(1.25); }
+    75%  { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  /* ── New Order Highlight (Admin) ── */
+  .new-order-highlight {
+    animation: orderHighlight 2s ease forwards;
+  }
+
+  @keyframes orderHighlight {
+    0%   { background-color: #e8f5e9; }
+    100% { background-color: transparent; }
+  }
+
+  /* ── Spinner ── */
+  .spinner {
+    animation: spin 0.75s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ── Hero Illustration Float ── */
+  .hero-illustration {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-15px); }
+  }
+
+  /* ── Cart Count Badge Pop ── */
+  .cart-count {
+    animation: badgePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes badgePop {
+    0%   { transform: scale(0.3) rotate(-15deg); }
+    60%  { transform: scale(1.35) rotate(8deg); }
+    100% { transform: scale(1) rotate(0); }
+  }
+
+  /* ── Tab Panel Switch ── */
+  .tab-panel.active {
+    animation: tabFadeIn 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  @keyframes tabFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ── Availability Badge Pulse ── */
+  .availability-badge.available {
+    animation: subtlePulse 3s ease-in-out infinite;
+  }
+
+  @keyframes subtlePulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.65; }
+  }
+
+  /* ── Optional: Gentle scale on add to cart button when clicked ── */
+  .btn-add-cart.added {
+    animation: addToCartPop 0.3s ease forwards;
+  }
+
+  @keyframes addToCartPop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
+
+  /* ── Site Style Welcome Animations ── */
+  @keyframes siteTextReveal {
+    0% { 
+      transform: translateY(30px); 
+      opacity: 0; 
+      letter-spacing: 0.1rem;
+    }
+    15% { 
+      transform: translateY(0); 
+      opacity: 1; 
+      letter-spacing: 0.3rem;
+    }
+    80% {
+      transform: translateY(0);
+      opacity: 1;
+      letter-spacing: 0.3rem;
+    }
+    100% { 
+      transform: translateY(-15px); 
+      opacity: 0; 
+      letter-spacing: 0.4rem;
+    }
+  }
+
+  @keyframes siteOverlayFadeOut {
+    0% { opacity: 1; visibility: visible; }
+    80% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+  }
+}
